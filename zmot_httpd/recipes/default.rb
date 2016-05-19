@@ -11,6 +11,11 @@ cookbook_file "/etc/httpd/conf/httpd.conf" do
   mode "0644"
 end
 
+cookbook_file "/etc/httpd/sites-available/dev.zmotauto.com.conf" do
+  source "dev.zmotauto.com.conf"
+  mode "0644"
+end
+
 service 'httpd' do
   action [ :restart ]
 end
