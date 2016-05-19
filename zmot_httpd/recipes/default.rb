@@ -10,3 +10,7 @@ cookbook_file "/etc/httpd/conf/httpd.conf" do
   source "httpd.conf"
   mode "0644"
 end
+
+service 'httpd' do
+  action [ :restart ]
+end
