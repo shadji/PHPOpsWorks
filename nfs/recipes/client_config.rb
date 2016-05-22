@@ -1,3 +1,7 @@
+Chef::Log.info("Amazon EC2 CLI Tools")
+package "aws-apitools-ec2" do
+  action :install
+end
 
 directory node['nfs_client']['nfs_mount_point'] do
   mode 0777
