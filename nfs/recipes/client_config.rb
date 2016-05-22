@@ -1,5 +1,5 @@
 
-directory node[:deploy]['PHP'][:environment_variables][:NFS_MOUNT] do
+directory '/mnt/nfs' do
   mode 0777
   owner 'root'
   group 'root'
@@ -7,7 +7,9 @@ directory node[:deploy]['PHP'][:environment_variables][:NFS_MOUNT] do
   action :create
 end
 
-mount node[:deploy]['PHP'][:environment_variables][:NFS_MOUNT] do
-  device node[:deploy]['PHP'][:environment_variables][:NFS_SERVER]
+mount '/mnt/nfs' do
+  device 'nfs1:/srv/nfs/export'
+  fstype 'nfs'
+  options 'rw'
   action [:mount, :enable]
 end
