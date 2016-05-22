@@ -1,8 +1,8 @@
 
 directory node['nfs_client']['nfs_mount_point'] do
   mode 0777
-  owner 'root'
-  group 'root'
+  owner 'ec2-user'
+  group 'ec2-user'
   recursive true
   action :create
 end
