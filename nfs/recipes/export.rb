@@ -1,5 +1,13 @@
 
-nfs_export "/exports" do
+directory node['nfs']['export'] do
+  mode 0755
+  owner 'root'
+  group 'root'
+  recursive true
+  action :create
+end
+
+nfs_export node['nfs']['export'] do
   network '*'
   writeable true 
   sync true
