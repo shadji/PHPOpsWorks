@@ -1,5 +1,5 @@
 
-directory '/mnt/nfs' do
+directory node['nfs_client']['nfs_mount_point'] do
   mode 0777
   owner 'root'
   group 'root'
@@ -7,8 +7,8 @@ directory '/mnt/nfs' do
   action :create
 end
 
-mount '/mnt/nfs' do
-  device 'nfs1:/srv/nfs/export'
+mount node['nfs_client']['nfs_mount_point'] do
+  device node['nfs_client']['nfs_mount_point'] + ":" + node['nfs']['export']
   fstype 'nfs'
   options 'rw'
   action [:mount, :enable]
