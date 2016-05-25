@@ -5,8 +5,8 @@ maintainer_email  "jrmash@cpan.org"
 version          "0.3.1"
 
 description       "Configures and Installs perlbrew"
-issues_url        "https://github.com/jrmash/perlbrew/issues"
-source_url        "https://github.com/jrmash/perlbrew"
+#issues_url        "https://github.com/jrmash/perlbrew/issues"
+#source_url        "https://github.com/jrmash/perlbrew"
 
 depends "build-essential"
 
