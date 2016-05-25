@@ -22,3 +22,8 @@
 include_recipe "build-essential"
 
 perlbrew node['perlbrew']['perlbrew_root']
+
+perlbrew '/opt/perlbrew' do
+    perls         [ 'perl-5.8.8' ]
+    upgrade       true
+  end
