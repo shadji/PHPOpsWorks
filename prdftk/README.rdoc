@@ -1,0 +1,14 @@
+= DESCRIPTION:
+
+Installs pdftk from source
+
+= REQUIREMENTS:
+
+= ATTRIBUTES:
+
+default[:pdftk][:version] = "2.02"
+default[:pdftk][:uri] = "http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/"
+
+= USAGE:
+
+recipe[pdftk]
