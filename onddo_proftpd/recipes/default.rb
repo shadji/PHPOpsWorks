@@ -102,6 +102,13 @@ execute 'Fix for Ubuntu 14.04 proftpd+logrotate bug' do
   notifies :restart, 'service[proftpd]'
 end
 
+directory '/etc/proftpd/authorized_keys/' do
+  owner 'root'
+  group 'root'
+  mode '0755'
+  action :create
+end
+
 cookbook_file "/etc/proftpd/conf.d/sftp.conf" do
   source "sftp.conf"
   mode "0644"
