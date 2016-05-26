@@ -5,7 +5,6 @@ cron 'test.pl' do
         day '*'
         month '*'
         weekday '*'
-        environment env
-        command "/opt/perlbrew/perls/perl-5.8.8/bin/perl /tmp/test.pl >> /home/ec2-user/test.pl.log"
+        command "/opt/perlbrew/perls/perl-5.8.8/bin/perl /srv/www/perlcsripts/current/test.pl >> /srv/www/perlcsripts/current/log/test.pl.log"
         action :create
 end
