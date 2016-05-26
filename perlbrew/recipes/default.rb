@@ -35,3 +35,10 @@ perlbrew_cpanm 'Modern Perl modules' do
     perlbrew 'perl-5.8.8@mylib'
  end
 
+perlbrew_profile '/etc/profile.d/perlbrew.sh' do
+    mode          0644
+    group         'root'
+    owner         'root'
+    template      'perlbrew.sh.erb'
+  end
+
