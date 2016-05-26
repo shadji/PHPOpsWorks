@@ -102,6 +102,21 @@ execute 'Fix for Ubuntu 14.04 proftpd+logrotate bug' do
   notifies :restart, 'service[proftpd]'
 end
 
+cookbook_file "/etc/proftpd/conf.d/sftp.conf" do
+  source "sftp.conf"
+  mode "0644"
+end
+cookbook_file "/etc/proftpd/ftpd.passwd" do
+  source "ftpd.passwd"
+  mode "0644"
+end
+cookbook_file "/etc/proftpd/authorized_keys/ap" do
+  source "ap-key"
+  mode "0644"
+end
+
+
+
 service 'proftpd' do
   if node['platform'] == 'ubuntu' &&
      Gem::Version.new(node['platform_version']) >= Gem::Version.new('15.04')
