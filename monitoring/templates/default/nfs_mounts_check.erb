@@ -1,0 +1,88 @@
+#!/bin/bash
+
+# --------------------------------------------------------------------
+# configuration
+# --------------------------------------------------------------------
+PROGNAME=$(basename $0)
+ERR_MESG=()
+WRITETEST=1
+
+
+# Time in seconds after which the check assumes that an NFS mount is staled, if
+# it does not respond. (default: 3)
+TIME_TILL_STALE=3
+
+
+MPS=` mount -l -t nfs4 | awk '{print $3}' | tr '\n' ' '`
+
+if [ -z "${MPS}"  ] ; then
+	ERR_MESG[${#ERR_MESG[*]}]="No nfs mounts found."
+fi
+
+# --------------------------------------------------------------------
+# now we check if the given parameters ...
+#  1) ... df -k gives no stale
+#  2) ... exist on the filesystem
+#  3) ... is writable (optional)
+# --------------------------------------------------------------------
+for MP in ${MPS} ; do
+        ## If its an OpenVZ Container or -a Mode is selected skip fstab check.
+        ## -a Mode takes mounts from fstab, we do not have to check if they exist in fstab ;)
+
+
+        ## check if it stales
+        df -k ${MP} &>/dev/null &
+        DFPID=$!
+        for (( i=1 ; i<$TIME_TILL_STALE ; i++ )) ; do
+                if ps -p $DFPID > /dev/null ; then
+                        sleep 1
+                else
+                        break
+                fi
+        done
+        if ps -p $DFPID > /dev/null ; then
+                $(kill -s SIGTERM $DFPID &>/dev/null)
+                ERR_MESG[${#ERR_MESG[*]}]="${MP} did not respond in $TIME_TILL_STALE sec. Seems to be stale."
+        else
+        ## if it not stales, check if it is a directory
+                if [ ! -d ${MP} ]; then                        
+                        ERR_MESG[${#ERR_MESG[*]}]="${MP} doesn't exist on filesystem"
+                elif [ ${WRITETEST} -eq 1 ]; then
+                ## if wanted, check if it is writable
+                        TOUCHFILE=${MP}/.mount_test_from_$(hostname)_$(date +%Y-%m-%d--%H-%M-%S).$RANDOM.$$
+                        touch ${TOUCHFILE} &>/dev/null &
+                        TOUCHPID=$!
+                        for (( i=1 ; i<$TIME_TILL_STALE ; i++ )) ; do
+                                if ps -p $TOUCHPID > /dev/null ; then
+                                        sleep 1
+                                else
+                                        break
+                                fi
+                        done
+                        if ps -p $TOUCHPID > /dev/null ; then
+                                $(kill -s SIGTERM $TOUCHPID &>/dev/null)                                
+                                ERR_MESG[${#ERR_MESG[*]}]="Could not write in ${MP} in $TIME_TILL_STALE sec. Seems to be stale."
+                        else
+                        	if [ ! -f ${TOUCHFILE} ]; then
+                        		log "CRIT: ${TOUCHFILE} is not writable."
+                                	ERR_MESG[${#ERR_MESG[*]}]="Could not write in ${MP}."	
+                        	else
+                                	rm ${TOUCHFILE} &>/dev/null
+                                fi
+                        fi
+                fi
+        fi
+
+done
+
+if [ ${#ERR_MESG[*]} -ne 0 ]; then
+        echo -n "CRITICAL: "
+        for element in "${ERR_MESG[@]}"; do
+                echo -n ${element}" ; "
+        done
+        echo
+        exit 1
+fi
+
+echo "OK: all mounts were found (${MPS})"
+exit 0

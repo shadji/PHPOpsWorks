@@ -1,15 +1,18 @@
-maintainer 'Eric G. Wolfe'
-maintainer_email 'eric.wolfe@gmail.com'
-license 'Apache 2.0'
-description 'Installs and configures NFS, and NFS exports'
-long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-name 'nfs'
-version '2.2.8'
-source_url 'https://github.com/atomic-penguin/cookbook-nfs' if respond_to?(:source_url)
-issues_url 'https://github.com/atomic-penguin/cookbook-nfs/issues' if respond_to?(:issues_url)
-
-%w(ubuntu debian redhat centos fedora scientific amazon oracle sles freebsd).each do |os|
-  supports os
+template "/home/ec2-user/nfs_mounts_check.sh" do
+  owner 'ec2-user'
+  group 'root'
+  mode 0774
+  source 'nfs_mounts_check.erb'  
 end
 
-depends 'line'
+template "/etc/monit.d/nfs_mount.monitrc" do
+  owner 'root'
+  group 'root'
+  mode 0644
+  source 'monit_mount.erb'
+  notifies :restart, "service[monit]" 
+end
+
+service 'monit' do
+  action :start
+end

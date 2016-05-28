@@ -6,5 +6,4 @@ check process nfs with pidfile /var/run/rpc.statd.pid
 
 check filesystem ext4 with path /dev/xvda1
   if space usage > 80% for 5 times within 15 cycles then alert
-  if space usage > 99% then stop
-  if inode usage > 99% then stop
+  if inode usage > 95% then alert
