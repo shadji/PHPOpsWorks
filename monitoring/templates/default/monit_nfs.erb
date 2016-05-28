@@ -1,0 +1,9 @@
+check process nfs with pidfile /var/run/rpc.statd.pid
+  start program = "/etc/init.d/nfs start"
+  stop program  = "/etc/init.d/nfs condstop"
+  if failed host localhost port 2049 then restart
+  if 5 restarts within 5 cycles then timeout
+
+check filesystem ext4 with path /dev/xvda1
+  if space usage > 80% for 5 times within 15 cycles then alert
+  if inode usage > 95% then alert
