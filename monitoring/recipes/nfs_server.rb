@@ -7,5 +7,5 @@ template "/etc/monit.d/nfs_server.monitrc" do
 end
 
 service 'monit' do
-  action :nothing
+  action :start
 end
