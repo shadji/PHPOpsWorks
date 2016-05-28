@@ -1,6 +1,6 @@
 check process nfs with pidfile /var/run/rpc.statd.pid
   start program = "/etc/init.d/nfs start"
-  stop program  = "/etc/init.d/nfs stop"
+  stop program  = "/etc/init.d/nfs condstop"
   if failed host localhost port 2049 then restart
   if 5 restarts within 5 cycles then timeout
 

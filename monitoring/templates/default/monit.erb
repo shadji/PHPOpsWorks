@@ -1,0 +1,20 @@
+set daemon 60
+set mailserver localhost
+set eventqueue
+    basedir /var/monit
+    slots 100
+set logfile syslog
+Include /etc/monit.d/*.monitrc
+set httpd port 2812 and use the address localhost
+  allow localhost
+<% if @node[:send_alert] -%>
+set mailserver <%= node[:smtp] %> port <%= node[:port] %>
+    username "<%= node[:username] %>" password "<%= node[:password] %>"
+	<% if @node[:useTLS] -%>
+    using tlsv1
+	<% end -%>
+    with timeout 30 seconds
+<% node[:emails].each do |mail| -%>
+set alert <%= mail['email'] %>
+<% end -%>
+<% end -%>
