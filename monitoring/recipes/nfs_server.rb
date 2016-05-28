@@ -1,4 +1,4 @@
-template "/etc/monit.d/" do
+template "/etc/monit.d/nfs_server.monitrc" do
   owner 'root'
   group 'root'
   mode 0644
