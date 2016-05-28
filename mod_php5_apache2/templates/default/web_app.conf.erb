@@ -1,6 +1,6 @@
 LoadModule cgi_module modules/mod_cgi.so
 AddHandler cgi-script .cgi .pl
-<% @node[:sites].each do |site| -%>
+<% node[:sites].each do |site| -%>
 <VirtualHost *:80>
     ServerName <%= site[:ServerName] %>
     ServerAlias <%= site[:ServerAlias] %>
