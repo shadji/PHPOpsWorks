@@ -1,10 +1,10 @@
 LoadModule cgi_module modules/mod_cgi.so
 AddHandler cgi-script .cgi .pl
-
+<% @node[:sites].each do |site| -%>
 <VirtualHost *:80>
-    ServerName test-dev.zmotauto.com
-    ServerAlias test-www.dev.zmotauto.com
-    DocumentRoot <%= @params[:docroot] %>dev
+    ServerName <%= site[:ServerName] %>
+    ServerAlias <%= site[:ServerAlias] %>
+    DocumentRoot <%= @params[:docroot] %><%= site[:DocumentRoot] %>
     ServerAdmin webmaster@duke.zmotauto.com
 
   <Directory <%= @params[:docroot] %>>
@@ -30,8 +30,8 @@ AddHandler cgi-script .cgi .pl
   </Directory>
 
   LogLevel <%= node[:apache][:log_level] %>
-  ErrorLog <%= node[:apache][:log_dir] %>/dev.zmotauto.com-error.log
-  CustomLog <%= node[:apache][:log_dir] %>/dev.zmotauto.com-access.log combined
+  ErrorLog <%= node[:apache][:log_dir] %>/<%= site[:ErrorLogName] %>
+  CustomLog <%= node[:apache][:log_dir] %>/<%= site[:AccessLogName] %> combined
 
   FileETag none
 
@@ -60,9 +60,9 @@ AddHandler cgi-script .cgi .pl
 </VirtualHost>
 
 <VirtualHost *:443>
-    ServerName test-dev.zmotauto.com
-    ServerAlias test-www.dev.zmotauto.com
-    DocumentRoot <%= @params[:docroot] %>/dev
+    ServerName <%= site[:ServerName] %>
+    ServerAlias <%= site[:ServerAlias] %>
+    DocumentRoot <%= @params[:docroot] %><%= site[:DocumentRoot] %>
     ServerAdmin webmaster@duke.zmotauto.com
 
 
@@ -98,8 +98,8 @@ AddHandler cgi-script .cgi .pl
   </Directory>
 
   LogLevel <%= node[:apache][:log_level] %>
-  ErrorLog <%= node[:apache][:log_dir] %>/dev.zmotauto.com-error.log
-  CustomLog <%= node[:apache][:log_dir] %>/dev.zmotauto.com-ssl-access.log combined
+  ErrorLog <%= node[:apache][:log_dir] %>/<%= site[:ErrorLogNameSSL] %>
+  CustomLog <%= node[:apache][:log_dir] %>/<%= site[:AccessLogNameSSL] %> combined
 
   FileETag none
 
@@ -127,4 +127,4 @@ AddHandler cgi-script .cgi .pl
   <% end -%>
 </VirtualHost>
 
-
+<% end -%>
