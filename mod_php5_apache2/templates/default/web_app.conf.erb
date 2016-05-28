@@ -1,7 +1,10 @@
+LoadModule cgi_module modules/mod_cgi.so
+AddHandler cgi-script .cgi .pl
+
 <VirtualHost *:80>
     ServerName test-dev.zmotauto.com
     ServerAlias test-www.dev.zmotauto.com
-    DocumentRoot <%= @params[:docroot] %>/dev
+    DocumentRoot <%= @params[:docroot] %>dev
     ServerAdmin webmaster@duke.zmotauto.com
 
   <Directory <%= @params[:docroot] %>>
@@ -10,6 +13,11 @@
     Order allow,deny
     Allow from all
   </Directory>
+
+ <Directory "<%= @params[:docroot] %>dev/cgi-bin">
+    Options +ExecCGI
+    AddHandler cgi-script .pl
+ </Directory>
 
   <Directory ~ "\.svn">
     Order allow,deny
@@ -22,9 +30,8 @@
   </Directory>
 
   LogLevel <%= node[:apache][:log_level] %>
-  ErrorLog <%= node[:apache][:log_dir] %>/<%= @params[:name] %>-error.log
-  CustomLog <%= node[:apache][:log_dir] %>/<%= @params[:name] %>-access.log combined
-  CustomLog <%= node[:apache][:log_dir] %>/<%= @params[:name] %>-ganglia.log ganglia
+  ErrorLog <%= node[:apache][:log_dir] %>/dev.zmotauto.com-error.log
+  CustomLog <%= node[:apache][:log_dir] %>/dev.zmotauto.com-access.log combined
 
   FileETag none
 
@@ -75,6 +82,11 @@
     Allow from all
   </Directory>
 
+  <Directory "<%= @params[:docroot] %>dev/cgi-bin">
+    Options +ExecCGI
+    AddHandler cgi-script .pl
+  </Directory>
+
   <Directory ~ "\.svn">
     Order allow,deny
     Deny from all
@@ -86,9 +98,8 @@
   </Directory>
 
   LogLevel <%= node[:apache][:log_level] %>
-  ErrorLog <%= node[:apache][:log_dir] %>/<%= @params[:name] %>-error.log
-  CustomLog <%= node[:apache][:log_dir] %>/<%= @params[:name] %>-ssl-access.log combined
-  CustomLog <%= node[:apache][:log_dir] %>/<%= @params[:name] %>-ssl-ganglia.log ganglia
+  ErrorLog <%= node[:apache][:log_dir] %>/dev.zmotauto.com-error.log
+  CustomLog <%= node[:apache][:log_dir] %>/dev.zmotauto.com-ssl-access.log combined
 
   FileETag none
 
