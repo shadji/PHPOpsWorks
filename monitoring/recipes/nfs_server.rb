@@ -5,3 +5,7 @@ template "/etc/monit.d/" do
   source 'monit_nfs.erb'
   notifies :restart, "service[monit]" 
 end
+
+service 'monit' do
+  action :nothing
+end
