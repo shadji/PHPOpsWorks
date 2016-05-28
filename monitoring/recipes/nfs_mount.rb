@@ -4,9 +4,9 @@ template "/home/ec2-user/nfs_mounts_check.sh" do
   mode 0774
   source 'nfs_mounts_check.erb'  
 end
-Chef::Log.info("/home/ec2-user/nfs_mounts_check.sh creted")
 
-template "/etc/monit.d/nfs_mounts_check" do
+
+template "/etc/monit.d/nfs_mounts_check.monitrc" do
   owner 'root'
   group 'root'
   mode 0644
@@ -14,7 +14,6 @@ template "/etc/monit.d/nfs_mounts_check" do
   notifies :restart, "service[monit]" 
 end
 
-Chef::Log.info("/etc/monit.d/nfs_mounts_check.monitrc creted")
 service 'monit' do
   action :start
 end
