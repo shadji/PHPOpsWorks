@@ -5,7 +5,3 @@ template "/etc/monit.conf" do
   source 'monit.erb'  
   notifies :restart, "service[monit]" 
 end
-
-service 'monit' do
-  action :start
-end

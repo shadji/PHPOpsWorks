@@ -5,7 +5,7 @@ template "/home/ec2-user/nfs_mounts_check.sh" do
   source 'nfs_mounts_check.erb'  
 end
 
-template "/etc/monit.d/nfs_mount.monitrc" do
+template "/etc/monit.d/nfs_mounts_check.monitrc" do
   owner 'root'
   group 'root'
   mode 0644
