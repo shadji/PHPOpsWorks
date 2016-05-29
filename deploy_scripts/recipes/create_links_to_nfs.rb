@@ -6,7 +6,7 @@ mode = "0770"
 node[:deploy].each do |application, deploy|
 	node[:sites].each do |site|
 		
-		Chef::Log.info(`ls -la #{deploy[:deploy_to]}`)
+		Chef::Log.info(`ls -la #{deploy[:deploy_to]}/releases`)
 		
 		Chef::Log.info("Createing directory, if don't exisits")
 		Chef::Log.info(`sudo mkdir -p #{site.link}`)
