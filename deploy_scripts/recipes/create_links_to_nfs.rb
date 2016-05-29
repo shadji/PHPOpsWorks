@@ -5,9 +5,9 @@ mode = "0770"
 
 node[:deploy].each do |application, deploy|
 	node[:sites].each do |site|
-		application[:symlinks].each do |link|
-			Chef::Log.info("Link: #{link[:target]}")
-		end
+		
+		Chef::Log.info(`ls -la #{deploy[:deploy_to]}`)
+		
 		Chef::Log.info("Createing directory, if don't exisits")
 		Chef::Log.info(`sudo mkdir -p #{site.link}`)
 		Chef::Log.info(`sudo chown #{user}:#{group} #{site.link}`)
