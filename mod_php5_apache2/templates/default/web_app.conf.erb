@@ -1,7 +1,7 @@
 LoadModule cgi_module modules/mod_cgi.so
 AddHandler cgi-script .cgi .pl
 <% node[:sites].each do |site| -%>
-<VirtualHost *:80>
+<VirtualHost <%= node["opsworks"]["instance"]["private_ip"] %>:80>
     ServerName <%= site[:ServerName] %>
     ServerAlias <%= site[:ServerAlias] %>
     DocumentRoot <%= @params[:docroot] %><%= site[:DocumentRoot] %>
@@ -14,7 +14,7 @@ AddHandler cgi-script .cgi .pl
     Allow from all
   </Directory>
 
-<% if site[:enable_cgi] -%>
+<% if site[:enable_cgi-bin] -%>
  <Directory "<%= @params[:docroot] %><%= site[:cgi-bin] %>">
     Options +ExecCGI
     AddHandler cgi-script .pl
@@ -61,7 +61,7 @@ AddHandler cgi-script .cgi .pl
   <% end -%>
 </VirtualHost>
 
-<VirtualHost *:443>
+<VirtualHost <%= node["opsworks"]["instance"]["private_ip"] %>:443>
     ServerName <%= site[:ServerName] %>
     ServerAlias <%= site[:ServerAlias] %>
     DocumentRoot <%= @params[:docroot] %><%= site[:DocumentRoot] %>
@@ -84,7 +84,7 @@ AddHandler cgi-script .cgi .pl
     Allow from all
   </Directory>
 
-<% if site[:enable_cgi] -%>
+<% if site[:enable_cgi-bin] -%>
  <Directory "<%= @params[:docroot] %><%= site[:cgi-bin] %>">
     Options +ExecCGI
     AddHandler cgi-script .pl
