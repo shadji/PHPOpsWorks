@@ -30,8 +30,8 @@ AddHandler cgi-script .cgi .pl
   </Directory>
 
   LogLevel <%= node[:apache][:log_level] %>
-  ErrorLog <%= node[:apache][:log_dir] %>/<%= site[:name]-error.log %>
-  CustomLog <%= node[:apache][:log_dir] %>/<%= site[:name]-acces.log %> combined
+  ErrorLog <%= node[:apache][:log_dir] %>/<%= site[:name] %>-error.log
+  CustomLog <%= node[:apache][:log_dir] %>/<%= site[:name] %>-acces.log combined
 
   FileETag none
 
@@ -98,8 +98,8 @@ AddHandler cgi-script .cgi .pl
   </Directory>
 
   LogLevel <%= node[:apache][:log_level] %>
-  ErrorLog <%= node[:apache][:log_dir] %>/<%= site[:name]-ssl-error.log %>
-  CustomLog <%= node[:apache][:log_dir] %>/<%= site[:name]-ssl-access.log %> combined
+  ErrorLog <%= node[:apache][:log_dir] %>/<%= site[:name] %>-ssl-error.log
+  CustomLog <%= node[:apache][:log_dir] %>/<%= site[:name] %>-ssl-access.log combined
 
   FileETag none
 
