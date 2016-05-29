@@ -1,9 +1,12 @@
 LoadModule cgi_module modules/mod_cgi.so
 AddHandler cgi-script .cgi .pl
+NameVirtualHost <%= node["opsworks"]["instance"]["private_ip"] %>:80
+NameVirtualHost <%= node["opsworks"]["instance"]["private_ip"] %>:443
+NameVirtualHost 127.0.0.1:80
+NameVirtualHost *
+
 <% node[:sites].each do |site| -%>
-NameVirtualHost <%= site[:ServerName] %>:80
-NameVirtualHost <%= site[:ServerName] %>:443
-<VirtualHost <%= site[:ServerName] %>:80>
+<VirtualHost <%= node["opsworks"]["instance"]["private_ip"] %>:80>
     ServerName <%= site[:ServerName] %>
     ServerAlias <%= site[:ServerAlias] %>
     DocumentRoot <%= @params[:docroot] %><%= site[:DocumentRoot] %>
@@ -63,7 +66,7 @@ NameVirtualHost <%= site[:ServerName] %>:443
   <% end -%>
 </VirtualHost>
 
-<VirtualHost <%= site[:ServerName] %>:443>
+<VirtualHost <%= node["opsworks"]["instance"]["private_ip"] %>:443>
     ServerName <%= site[:ServerName] %>
     ServerAlias <%= site[:ServerAlias] %>
     DocumentRoot <%= @params[:docroot] %><%= site[:DocumentRoot] %>
