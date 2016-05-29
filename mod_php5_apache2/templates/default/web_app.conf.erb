@@ -14,10 +14,12 @@ AddHandler cgi-script .cgi .pl
     Allow from all
   </Directory>
 
- <Directory "<%= @params[:docroot] %>dev/cgi-bin">
+<% if site[:enable_cgi] -%>
+ <Directory "<%= @params[:docroot] %><%= site[:cgi-bin] %>">
     Options +ExecCGI
     AddHandler cgi-script .pl
  </Directory>
+<% end -%>
 
   <Directory ~ "\.svn">
     Order allow,deny
@@ -82,10 +84,12 @@ AddHandler cgi-script .cgi .pl
     Allow from all
   </Directory>
 
-  <Directory "<%= @params[:docroot] %>dev/cgi-bin">
+<% if site[:enable_cgi] -%>
+ <Directory "<%= @params[:docroot] %><%= site[:cgi-bin] %>">
     Options +ExecCGI
     AddHandler cgi-script .pl
-  </Directory>
+ </Directory>
+<% end -%>
 
   <Directory ~ "\.svn">
     Order allow,deny
