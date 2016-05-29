@@ -121,7 +121,7 @@ AddHandler cgi-script .cgi .pl
   <% @environment.each do |key, value| %>
   SetEnv "<%= key %>" "<%= value %>"
   <% end %>
-  SetEnv nokeepalive ssl-unclean-shutdown
+  
   <% if @params[:mounted_at] -%>
   AliasMatch ^<%= @params[:mounted_at] %>/(.*)$ <%= @params[:docroot] %>$1
   <% end -%>
