@@ -2,8 +2,6 @@ LoadModule cgi_module modules/mod_cgi.so
 AddHandler cgi-script .cgi .pl
 NameVirtualHost <%= node["opsworks"]["instance"]["private_ip"] %>:80
 NameVirtualHost <%= node["opsworks"]["instance"]["private_ip"] %>:443
-NameVirtualHost 127.0.0.1:80
-NameVirtualHost *
 
 <% node[:sites].each do |site| -%>
 <VirtualHost <%= node["opsworks"]["instance"]["private_ip"] %>:80>
@@ -75,6 +73,7 @@ NameVirtualHost *
 
   SSLEngine on
   SSLProxyEngine on
+  SSLProtocol all -SSLv2 -SSLv3
   SSLCertificateFile <%= node[:apache][:dir] %>/ssl/<%= @params[:server_name] %>.crt
   SSLCertificateKeyFile <%= node[:apache][:dir] %>/ssl/<%= @params[:server_name] %>.key
   <% if @params[:ssl_certificate_ca] -%>
@@ -124,7 +123,7 @@ NameVirtualHost *
   <% @environment.each do |key, value| %>
   SetEnv "<%= key %>" "<%= value %>"
   <% end %>
-
+  SetEnv nokeepalive ssl-unclean-shutdown
   <% if @params[:mounted_at] -%>
   AliasMatch ^<%= @params[:mounted_at] %>/(.*)$ <%= @params[:docroot] %>$1
   <% end -%>
