@@ -14,8 +14,8 @@ AddHandler cgi-script .cgi .pl
     Allow from all
   </Directory>
 
-<% if site[:enable_cgi-bin] -%>
- <Directory "<%= @params[:docroot] %><%= site[:cgi-bin] %>">
+<% if site[:enable_cgi] -%>
+ <Directory "<%= @params[:docroot] %><%= site[:cgi_bin] %>">
     Options +ExecCGI
     AddHandler cgi-script .pl
  </Directory>
@@ -84,8 +84,8 @@ AddHandler cgi-script .cgi .pl
     Allow from all
   </Directory>
 
-<% if site[:enable_cgi-bin] -%>
- <Directory "<%= @params[:docroot] %><%= site[:cgi-bin] %>">
+<% if site[:enable_cgi] -%>
+ <Directory "<%= @params[:docroot] %><%= site[:cgi_bin] %>">
     Options +ExecCGI
     AddHandler cgi-script .pl
  </Directory>
