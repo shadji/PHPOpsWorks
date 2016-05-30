@@ -1,10 +1,11 @@
 LoadModule cgi_module modules/mod_cgi.so
 AddHandler cgi-script .cgi .pl
 
-<VirtualHost *:80>
-    ServerName test-dev.zmotauto.com
-    ServerAlias test-www.dev.zmotauto.com
-    DocumentRoot <%= @params[:docroot] %>dev
+<% node[:sites].each do |site| -%>
+<VirtualHost <%= node["opsworks"]["instance"]["private_ip"] %>:80>
+    ServerName <%= site[:ServerName] %>
+    ServerAlias <%= site[:ServerAlias] %>
+    DocumentRoot <%= @params[:docroot] %><%= site[:DocumentRoot] %>
     ServerAdmin webmaster@duke.zmotauto.com
 
   <Directory <%= @params[:docroot] %>>
@@ -14,10 +15,12 @@ AddHandler cgi-script .cgi .pl
     Allow from all
   </Directory>
 
- <Directory "<%= @params[:docroot] %>dev/cgi-bin">
+<% if site[:enable_cgi] -%>
+ <Directory "<%= @params[:docroot] %><%= site[:cgi_bin] %>">
     Options +ExecCGI
     AddHandler cgi-script .pl
  </Directory>
+<% end -%>
 
   <Directory ~ "\.svn">
     Order allow,deny
@@ -30,8 +33,8 @@ AddHandler cgi-script .cgi .pl
   </Directory>
 
   LogLevel <%= node[:apache][:log_level] %>
-  ErrorLog <%= node[:apache][:log_dir] %>/dev.zmotauto.com-error.log
-  CustomLog <%= node[:apache][:log_dir] %>/dev.zmotauto.com-access.log combined
+  ErrorLog <%= node[:apache][:log_dir] %>/<%= site[:name] %>-error.log
+  CustomLog <%= node[:apache][:log_dir] %>/<%= site[:name] %>-acces.log combined
 
   FileETag none
 
@@ -59,15 +62,16 @@ AddHandler cgi-script .cgi .pl
   <% end -%>
 </VirtualHost>
 
-<VirtualHost *:443>
-    ServerName test-dev.zmotauto.com
-    ServerAlias test-www.dev.zmotauto.com
-    DocumentRoot <%= @params[:docroot] %>/dev
+<VirtualHost <%= node["opsworks"]["instance"]["private_ip"] %>:443>
+    ServerName <%= site[:ServerName] %>
+    ServerAlias <%= site[:ServerAlias] %>
+    DocumentRoot <%= @params[:docroot] %><%= site[:DocumentRoot] %>
     ServerAdmin webmaster@duke.zmotauto.com
 
 
   SSLEngine on
   SSLProxyEngine on
+  SSLProtocol all -SSLv2 -SSLv3
   SSLCertificateFile <%= node[:apache][:dir] %>/ssl/<%= @params[:server_name] %>.crt
   SSLCertificateKeyFile <%= node[:apache][:dir] %>/ssl/<%= @params[:server_name] %>.key
   <% if @params[:ssl_certificate_ca] -%>
@@ -82,10 +86,12 @@ AddHandler cgi-script .cgi .pl
     Allow from all
   </Directory>
 
-  <Directory "<%= @params[:docroot] %>dev/cgi-bin">
+<% if site[:enable_cgi] -%>
+ <Directory "<%= @params[:docroot] %><%= site[:cgi_bin] %>">
     Options +ExecCGI
     AddHandler cgi-script .pl
-  </Directory>
+ </Directory>
+<% end -%>
 
   <Directory ~ "\.svn">
     Order allow,deny
@@ -98,8 +104,8 @@ AddHandler cgi-script .cgi .pl
   </Directory>
 
   LogLevel <%= node[:apache][:log_level] %>
-  ErrorLog <%= node[:apache][:log_dir] %>/dev.zmotauto.com-error.log
-  CustomLog <%= node[:apache][:log_dir] %>/dev.zmotauto.com-ssl-access.log combined
+  ErrorLog <%= node[:apache][:log_dir] %>/<%= site[:name] %>-ssl-error.log
+  CustomLog <%= node[:apache][:log_dir] %>/<%= site[:name] %>-ssl-access.log combined
 
   FileETag none
 
@@ -115,7 +121,7 @@ AddHandler cgi-script .cgi .pl
   <% @environment.each do |key, value| %>
   SetEnv "<%= key %>" "<%= value %>"
   <% end %>
-
+  
   <% if @params[:mounted_at] -%>
   AliasMatch ^<%= @params[:mounted_at] %>/(.*)$ <%= @params[:docroot] %>$1
   <% end -%>
@@ -127,4 +133,4 @@ AddHandler cgi-script .cgi .pl
   <% end -%>
 </VirtualHost>
 
-
+<% end -%>
