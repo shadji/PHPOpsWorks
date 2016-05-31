@@ -5,5 +5,5 @@ metadata
 group :integration do
   cookbook 'yum'
   cookbook 'apt'
-  cookbook 'php_test', path: './test/cookbooks/php_test'
+  cookbook 'php'
 end
