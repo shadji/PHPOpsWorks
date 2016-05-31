@@ -1,4 +1,5 @@
 include_recipe 'php'
+override['php']['packages'] = %w(php-pear)
 
 template "#{node['php']['conf_dir']}/php.ini" do
     source node['php']['ini']['template']
