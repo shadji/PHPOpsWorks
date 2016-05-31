@@ -1,4 +1,4 @@
-# include_recipe 'php::ini'
+include_recipe 'php::php_pear'
 
 template "#{node['php']['conf_dir']}/php.ini" do
     source node['php']['ini']['template']
@@ -9,4 +9,14 @@ template "#{node['php']['conf_dir']}/php.ini" do
         mode '0644'
     end
     variables(:directives => { 'date.timezone' => 'America/Los_Angeles'})
+end
+
+# install a needed pear libs
+php_pear "Mail" do
+  action :install
+end
+
+# install a needed pear libs
+php_pear "Spreadsheet_Excel_Writer" do
+  action :install
 end
