@@ -1,5 +1,5 @@
 include_recipe 'php'
-node.default['php']['packages'] = %w(php-pear)
+node.default['php']['packages'] = 'php-pear'
 
 template "#{node['php']['conf_dir']}/php.ini" do
     source node['php']['ini']['template']
