@@ -1,4 +1,3 @@
-include_recipe 'php'
+include_recipe 'php::ini'
 
-node.default['php']['packages'] = %w(php53 php53-devel php53-cli php-pear)
 node.default['php']['date.timezone'] = 'America/Los_Angeles'
