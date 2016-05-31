@@ -1,3 +1,4 @@
+include_recipe 'php'
 
 template "#{node['php']['conf_dir']}/php.ini" do
     source node['php']['ini']['template']
