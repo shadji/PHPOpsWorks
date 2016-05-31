@@ -1,13 +1,5 @@
 include_recipe 'php'
 
-override_attributes(
-  "php" => {
-    "packages" => %w(php-pear)
-  }
-)
-run_list(
-  "recipe[php]"
-)
 
 template "#{node['php']['conf_dir']}/php.ini" do
     source node['php']['ini']['template']
