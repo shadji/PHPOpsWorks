@@ -293,7 +293,7 @@ sudo perl ftpasswd --passwd --name=XXX --home=DIRECTORY --shell=/bin/false --uid
 
 To create a user and use a password from the standart input rather than the 
 
-echo "PASSWORD" | sudo perl ftpasswd --passwd --name=e --home=/tmp/ --shell=/bin/false --uid=1003 --file=/etc/proftpd/ftpd.passwd  --stdin
+echo "PASSWORD" | sudo perl ftpasswd --passwd --name=XXX --home=DIRECTORY --shell=/bin/false --uid=1003 --file=/etc/proftpd/ftpd.passwd  --stdin
 
 
 Contributing
