@@ -1,3 +1,3 @@
 include_recipe 'php'
 
-node['php']['date.timezone'] = 'America/New_York'
+node['php']['directives'] = { :date.timezone => 'America/Los_Angeles' }
