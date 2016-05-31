@@ -14,10 +14,11 @@ end
 
 # install a needed pear libs
 php_pear "Mail" do
-  action :install
+    action :install
 end
 
 # install a needed pear libs
 php_pear "Spreadsheet_Excel_Writer" do
-  action :install
+    preferred_state "beta"
+    action :install
 end
