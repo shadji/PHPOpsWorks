@@ -1,4 +1,3 @@
-include_recipe 'php::php_pear'
 
 template "#{node['php']['conf_dir']}/php.ini" do
     source node['php']['ini']['template']
