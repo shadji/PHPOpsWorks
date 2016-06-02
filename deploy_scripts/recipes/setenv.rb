@@ -1,11 +1,12 @@
-  template ::File.join(params[:path], "app.env") do
+node[:deploy].each do |application, deploy|
+  template File.join(deploy[:deploy_to], "shared","app.env") do
     source "app.env.erb"
-    cookbook "opsworks_nodejs"
     mode 0770
-    owner params[:user]
-    group params[:group]
+    owner deploy[:user]
+    group deploy[:group]
     variables(
-      :environment => OpsWorks::Escape.escape_double_quotes(params[:environment_variables])
+      :environment => OpsWorks::Escape.escape_double_quotes(deploy[:environment_variables])
     )
-    only_if { ::File.exists?(params[:path]) }
+    only_if {File.exists?("#{deploy[:deploy_to]}/shared")}
   end
+end
