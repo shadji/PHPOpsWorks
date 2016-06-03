@@ -4,9 +4,11 @@ template "/home/ec2-user/bash_wrapper.sh" do
   mode 0774
   source 'bash_wrapper.erb'  
 end
+my_env_vars = {"TZ" => "America/New_York"}
 
 cron 'test.pl' do
         user'ec2-user'
+        environment my_env_vars
         minute '*'
         hour '*'
         day '*'
