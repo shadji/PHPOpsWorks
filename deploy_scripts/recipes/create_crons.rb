@@ -15,14 +15,29 @@ template "/etc/sysconfig/crond" do
 end
 
 my_env_vars = {"TZ" => "America/New_York"}
-cron 'test.pl' do
-        user'ec2-user'
-        environment my_env_vars
-        minute '*'
-        hour '*'
-        day '*'
-        month '*'
-        weekday '*'
-        command "/home/ec2-user/bash_wrapper.sh test.pl"
-        action :create
+node[:crons].each do |cron|
+
+  cron_d cron[:name] do
+    hour cron[:hour]
+    minute cron[:minute]
+    weekday cron[:weekday]
+    day cron[:day]
+    month cron[:month]
+    mailto cron[:mailto]
+    environment my_env_vars
+    command %W{/home/ec2-user/bash_wrapper.sh "#{cron[:script]}"
+      }.join(' ')
+    action :delete if cron[:disable]
+  end
 end
+# cron 'test.pl' do
+#         user'ec2-user'
+#         environment my_env_vars
+#         minute '*'
+#         hour '*'
+#         day '*'
+#         month '*'
+#         weekday '*'
+#         command "/home/ec2-user/bash_wrapper.sh test.pl"
+#         action :create
+# end
