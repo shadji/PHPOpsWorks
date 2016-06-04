@@ -5,3 +5,5 @@ cookbook 'php', '~> 1.9.0'
 cookbook 'nfs', '~> 2.2.8'
 cookbook 'perlbrew', '~> 0.3.0'
 cookbook 'onddo_proftpd', '~> 2.1.0'
+cookbook 'cron', '~> 1.7.6'
+

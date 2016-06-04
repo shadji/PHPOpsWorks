@@ -1,8 +1,10 @@
+include_recipe 'cron'
+
 template "/home/ec2-user/bash_wrapper.sh" do
   owner 'ec2-user'
   group 'ec2-user'
   mode 0774
-  source 'bash_wrapper.erb'  
+  source 'bash_wrapper.erb'
 end
 
 template "/etc/sysconfig/crond" do
