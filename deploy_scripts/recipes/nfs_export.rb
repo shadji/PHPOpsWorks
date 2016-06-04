@@ -1,7 +1,7 @@
 include_recipe 'nfs'
 
 directory node['nfs']['export'] do
-  mode 0777
+  mode 0770
   owner 'ec2-user'
   group 'ec2-user'
   recursive true
