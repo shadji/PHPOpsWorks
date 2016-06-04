@@ -4,8 +4,8 @@ end
 
 user 'apache' do
   comment 'Apache'
-  uid '48'
-  gid '48'
+  uid 48
+  gid 48
   home '/var/www'
   shell '/sbin/nologin'
 end
