@@ -113,10 +113,10 @@ cookbook_file "/etc/proftpd/conf.d/sftp.conf" do
   source "sftp.conf"
   mode "0644"
 end
-cookbook_file "/etc/proftpd/ftpd.passwd" do
-  source "ftpd.passwd"
-  mode "0644"
+link '/etc/proftpd/ftpd.passwd' do
+  to node['nfs_client']['nfs_mount_point'] + "/config/proftpd/ftpd.passwd"
 end
+
 cookbook_file "/etc/proftpd/authorized_keys/ap" do
   source "ap-key"
   mode "0644"

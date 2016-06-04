@@ -1,0 +1,14 @@
+#!/bin/bash
+PERL_SCRIPT="$1"
+PATH_TO_SCRIPTS="/srv/www/perlcsripts/current/"
+source /etc/profile.d/perlbrew.sh
+
+perl $PATH_TO_SCRIPTS$PERL_SCRIPT
+
+if [ $? -eq 0 ]; then
+    echo OK
+else
+    echo "FAILED $PERL_SCRIPT" | mailx -s "Subject" a.panov@gmail.com
+fi
+
+

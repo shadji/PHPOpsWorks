@@ -19,7 +19,9 @@
 # limitations under the License.
 #
 
-default['proftpd']['conf']['default_address'] = node['ipaddress']
+##default['proftpd']['conf']['default_address'] = node['ipaddress']
+default['proftpd']['conf']['default_address'] = node["opsworks"]["instance"]["ip"]
+default['proftpd']['conf']['masquerade_address'] = node["opsworks"]["instance"]["ip"]
 
 # Set off to disable IPv6 support which is annoying on IPv4 only boxes.
 default['proftpd']['conf']['use_ipv6'] = true
