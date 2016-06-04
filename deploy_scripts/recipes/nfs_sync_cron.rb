@@ -17,4 +17,4 @@ ruby_block "set-up S3 Archive cron on NFS storage service" do
     end
     not_if { node[:deploy][:application] != 'scripts'}
 end
-Status API Training Shop Blog About
+
