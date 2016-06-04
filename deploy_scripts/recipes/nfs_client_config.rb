@@ -6,9 +6,9 @@ package "aws-apitools-ec2" do
 end
 
 directory node['nfs_client']['nfs_mount_point'] do
-  mode 0777
+  mode 0770
   owner 'ec2-user'
-  group 'ec2-user'
+  group 'nfs-share'
   recursive true
   action :create
 end
