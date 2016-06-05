@@ -17,7 +17,7 @@ end
 my_env_vars = {"TZ" => "America/New_York"}
 node[:crons].each do |cron|
 
-  cron_d cron[:name] do
+  cron cron[:name] do
     hour cron[:hour]
     minute cron[:minute]
     weekday cron[:weekday]

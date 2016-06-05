@@ -17,7 +17,7 @@ php_pear "Mail" do
     action :install
 end
 
-# install a needed pear libs
+# install beta channel pear libs
 php_pear "Spreadsheet_Excel_Writer" do
     preferred_state "beta"
     action :install
