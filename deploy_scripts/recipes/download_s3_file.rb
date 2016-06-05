@@ -10,6 +10,9 @@ ruby_block "Get file from s3" do
 	end
 end
 
+Chef::Log.info("'#{ $AWS_ACCESS_KEY_ID}")
+Chef::Log.info("'#{ $AWS_SECRET_ACCESS_KEY}'")
+
 include_recipe 's3_file'
 
 
