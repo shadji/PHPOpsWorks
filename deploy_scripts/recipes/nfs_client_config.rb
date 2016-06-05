@@ -8,7 +8,7 @@ end
 directory node['nfs_client']['nfs_mount_point'] do
   mode 02770
   owner 'ec2-user'
-  group 'nfs-share'
+  group 'apache'
   recursive true
   action :create
 end
@@ -20,3 +20,4 @@ mount node['nfs_client']['nfs_mount_point'] do
   action [:mount, :enable]
 end
 
+	
