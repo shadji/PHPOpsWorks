@@ -16,7 +16,8 @@ perlbrew_cpanm 'Modern Perl modules' do
             'XML::LibXML', 'Authen::SASL', 'Net::FTP', 'Net::FTPSSL',
             'Web::Scraper', 'Mail::POP3Client', 'MIME::Parser',
             'DateTime', 'DateTime::Format::MySQL', 'Math::GMP',
-            'Net::SSH::Perl', 'Math::Pari', 'Net::SFTP']
+            'Net::SSH::Perl', 'Math::Pari', 'Net::SFTP', 'Net::SMTPS',
+            'Email::Simple']
     perlbrew 'perl-5.8.8@mylib'
  end
 
