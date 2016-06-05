@@ -1,11 +1,9 @@
-node[:AWS_ACCESS_KEY_ID][:content] = ''
-node[:AWS_SECRET_ACCESS_KEY][:content] = ''
 
 ruby_block "Get file from s3" do
     block do
 		
-		node[:AWS_ACCESS_KEY_ID][:content] =  node[:deploy]['scripts'][:environment_variables][:AWS_ACCESS_KEY_ID]
-		node[:AWS_ACCESS_KEY_ID][:content] =  node[:deploy]['scripts'][:environment_variables][:AWS_SECRET_ACCESS_KEY]
+		node.set[:AWS_ACCESS_KEY_ID][:content] =  node[:deploy]['scripts'][:environment_variables][:AWS_ACCESS_KEY_ID]
+		node.set[:AWS_ACCESS_KEY_ID][:content] =  node[:deploy]['scripts'][:environment_variables][:AWS_SECRET_ACCESS_KEY]
 	
 	end
 end
