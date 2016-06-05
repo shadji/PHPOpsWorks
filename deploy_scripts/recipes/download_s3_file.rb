@@ -2,7 +2,7 @@
 
 ruby_block "Get file from s3" do
     block do
-		run_context.include_recipe 'aws::aws'
+		run_context.include_recipe 'aws'
 		aws_s3_file "/srv/www/t2" do
 		  bucket "mybucket.deyan"
 		  remote_path "t2"
