@@ -1,5 +1,5 @@
-depends 'aws'
 depends 'nfs'
 depends 'perlbrew'
 depends 'onddo_proftpd'
 depends 'cron'
+depends 's3_file'

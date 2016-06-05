@@ -1,6 +1,3 @@
-chef_gem 'aws-sdk' do
-  action :install
-end
 
 $AWS_ACCESS_KEY_ID = ''
 $AWS_SECRET_ACCESS_KEY = ''
@@ -13,9 +10,11 @@ ruby_block "Get file from s3" do
 	end
 end
 
-include_recipe 'aws'
-aws_s3_file "/srv/www/t2" do
-  bucket "mybucket.deyan"
+include_recipe 's3_file'
+
+
+s3_file "/srv/www/t2" do
+bucket "mybucket.deyan"
   remote_path "t2"
   aws_access_key_id $AWS_ACCESS_KEY_ID
   aws_secret_access_key $AWS_SECRET_ACCESS_KEY
