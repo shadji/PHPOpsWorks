@@ -3,7 +3,7 @@ package "aws-apitools-ec2" do
   action :install
 end
 aws_access_key_id = lambda {node[:deploy]['scripts'][:environment_variables][:AWS_ACCESS_KEY_ID]}
-aws_secret_access_key = lambda {{node[:deploy]['scripts'][:environment_variables][:AWS_SECRET_ACCESS_KEY]}
+aws_secret_access_key = lambda {node[:deploy]['scripts'][:environment_variables][:AWS_SECRET_ACCESS_KEY]}
 
 ruby_block 'restore' do
   block do		
