@@ -7,8 +7,8 @@ aws_secret_access_key = lambda {{node[:deploy]['scripts'][:environment_variables
 
 ruby_block 'restore' do
   block do		
-		Chef::Log.info("export AWS_ACCESS_KEY_ID=#{aws_access_key_id}; export AWS_SECRET_ACCESS_KEY=#{aws_secret_access_key}; aws s3 sync s3://#{node['s3']['bucket']} #{node['nfs']['export']}")
-        Chef::Log.info(`export AWS_ACCESS_KEY_ID=#{aws_access_key_id} && export AWS_SECRET_ACCESS_KEY=#{aws_secret_access_key} && aws s3 sync s3://#{node['s3']['bucket']} #{node['nfs']['export']}`)
+		Chef::Log.info("export AWS_ACCESS_KEY_ID=#{aws_access_key_id.call}; export AWS_SECRET_ACCESS_KEY=#{aws_secret_access_key.call}; aws s3 sync s3://#{node['s3']['bucket']} #{node['nfs']['export']}")
+        Chef::Log.info(`export AWS_ACCESS_KEY_ID=#{aws_access_key_id.call} && export AWS_SECRET_ACCESS_KEY=#{aws_secret_access_key.call} && aws s3 sync s3://#{node['s3']['bucket']} #{node['nfs']['export']}`)
         raise "Restore failed" unless $?.success?
 	end
 end
