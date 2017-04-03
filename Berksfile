@@ -1,4 +1,5 @@
 source 'https://supermarket.chef.io'
+cookbook 'mysql', '= 7.2.0'
 cookbook 'build-essential', '= 3.2.0'
 cookbook 'ohai', '= 3.0.1'
 cookbook 'php', '~> 1.9.0'
